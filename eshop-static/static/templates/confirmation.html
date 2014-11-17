@@ -1,0 +1,125 @@
+<div class="title" style="margin-top: 0px; font-size: 35px;">Place
+	Order</div>
+<hr>
+<div class="light">
+	<div class="col-md-3 txt-lg ">1. Select Device</div>
+	<div class="col-md-3 txt-lg ">2. Communication Details</div>
+	<div class="col-md-3 txt-lg ">
+		3. Payment Selection </span>
+	</div>
+	<div class="col-md-3 txt-lg brand-txt">
+		4. Confirmation <span class="ml-5 glyphicon glyphicon-chevron-right">
+	</div>
+</div>
+<hr>
+<div class="col-md-12 mt-50">
+
+
+	<hr>
+	<div class="col-md-6 mt-25">
+		<img src="/eshop-static/static/resource/images/pay_iphone.png"
+			class="img-responsive">
+	</div>
+	<div class="col-md-6 mt-25">
+		<div class="title" style="padding-left: 0px;">Order Summary</div>
+		<hr>
+		<table class="table table-condensed hidden-xs hidden-sm">
+			<thead class="light brand-txt">
+				<th class="txt-md">Product</th>
+				<th class="txt-md">Color</th>
+				<th class="txt-md">Storage</th>
+				<th class="txt-md">Price</th>
+			</thead>
+			<tbody>
+			<tbody>
+				<tr ng-repeat="device in order.deviceInfo">
+					<td class="txt-sm"><span class="light">{{device.model |
+							model}}</span></td>
+					<td class="txt-sm"><span class="light">{{device.color |
+							color}}</span></td>
+					<td class="txt-sm"><span class="light">{{device.storageDesc}}</span></td>
+					<td class="txt-sm"><span class="bold">N {{device.cost /
+							1000}}</span></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<fieldset>
+			<ul class="list-group visible-xs visible-sm mt-25"
+				ng-repeat="device in order.deviceInfo">
+				<li class="list-group-item"><span class="txt-md bold">{{device.model
+						| model}} {{device.storageDesc}} ({{device.color | color}})</span></li>
+				<li class="list-group-item"><span
+					class="col-xs-6 txt-sm brand-txt">Product </span> <span
+					class="col-xs-6 txt-sm">{{device.model | model}} </span></li>
+				<li class="list-group-item"><span
+					class="col-xs-6 txt-sm brand-txt">Color </span> <span
+					class="col-xs-6 txt-sm">{{device.color | color}}</span></li>
+				<li class="list-group-item"><span
+					class="col-xs-6 txt-sm brand-txt">Storage </span> <span
+					class="col-xs-6 txt-sm">{{device.storageDesc}} </span></li>
+				<li class="list-group-item"><span
+					class="col-xs-6 txt-sm brand-txt">Price </span> <span
+					class="col-xs-6 txt-sm">N {{device.cost / 1000}}</span></li>
+			</ul>
+		</fieldset>
+
+
+		<fieldset class="mb-25">
+			<div class="title" style="padding-left: 0px;">Shipping Address</div>
+			<hr>
+			<div class="txt-lg light">{{pd.name}}</div>
+			<div class="txt-md light">{{pd.shippingAddress}}</div>
+			<div class="txt-xs light">{{pd.city}}{{pd.customCity}}</div>
+			<div class="txt-xs light">{{pd.state}}</div>
+			<div class="txt-sm light">
+				<span class="glyphicon glyphicon-earphone mr-5"></span>{{pd.mobileNo}}
+			</div>
+		</fieldset>
+
+		<fieldset class="mb-25">
+			<div class="title green-txt light" style="padding-left: 0px;">Payment</div>
+			<hr>
+			<div class="txt-lg light">{{order.payment.mode|mode}}</div>
+			<div class="txt-sm light">{{order.payment.tenor|tenor}}</div>
+			<div class="txt-sm light">
+				Pay Here <span class="txt-lg brand-txt bold "><span
+					class="glyphicon glyphicon-hand-down"></span></span>
+			</div>
+			<div>
+				<a class="quickteller-checkout-anchor paybutton" id="99401"
+					style="text-align: left; margin-left: -5px;">Payment (Quick
+					Teller)</a>
+			</div>
+
+			<input type="hidden">
+		</fieldset>
+
+
+		<script type="text/javascript">
+			var QTCheckout = QTCheckout || {};
+			var testMode = true;
+			var baseUrl = "";
+			QTCheckout.paymentItems = QTCheckout.paymentItems || [];
+			QTCheckout.paymentItems.push({
+				paymentCode : 99401,
+				extraData : extraDetails
+			});
+			if (testMode == true)
+				baseUrl = "https://stageserv.interswitchng.com/quicktellercheckout/scripts/quickteller-checkout-min.js?v=";
+			else
+				baseUrl = "https://paywith.quickteller.com/scripts/quickteller-checkout-min.js?v=";
+			if (!QTCheckout.qtScript) {
+				var qtScript = document.createElement('script');
+				qtScript.type = 'text/javascript';
+				qtScript.async = true;
+				qtScript.src = baseUrl + new Date().getDay();
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(qtScript, s);
+				QTCheckout.qtScript = qtScript;
+			} else if (QTCheckout.buildPaymentItemsUI) {
+				QTCheckout.buildPaymentItemsUI();
+			}
+		</script>
+
+	</div>

@@ -1,0 +1,148 @@
+<div class="title" style="margin-top: 0px; font-size: 35px;">Place
+	Order</div>
+<hr>
+<div class="light">
+	<div class="col-md-3 txt-lg ">1. Select Device</div>
+	<div class="col-md-3 txt-lg ">2. Communication Details</div>
+	<div class="col-md-3 txt-lg brand-txt">
+		3. Payment Selection <span
+			class="ml-5 glyphicon glyphicon-chevron-right"></span>
+	</div>
+	<div class="col-md-3 txt-lg">4. Confirmation</div>
+</div>
+<hr>
+<div class="col-md-12 mt-50">
+	<div class="col-md-5">
+		<div class="row">
+			<div class="col-md-12">
+				<img src="/eshop-static/static/resource/images/iphone_payment.png"
+					class="img-responsive">
+			</div>
+			<div class="col-md-12 mt-25">
+				<div class="title" style="padding-left: 0px;">Order Summary</div>
+				<table class="table table-condensed hidden-xs hidden-sm">
+					<thead class="light brand-txt">
+						<th class="txt-md">Product</th>
+						<th class="txt-md">Color</th>
+						<th class="txt-md">Storage</th>
+						<th class="txt-md">Price</th>
+					</thead>
+					<tbody>
+					<tbody>
+						<tr ng-repeat="device in order.deviceInfo">
+							<td class="txt-sm"><span class="light">{{device.model
+									| model}}</span></td>
+							<td class="txt-sm"><span class="light">{{device.color
+									| color}}</span></td>
+							<td class="txt-sm"><span class="light">{{device.storageDesc}}</span></td>
+							<td class="txt-sm"><span class="bold">N {{device.cost / 1000}}</span></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<fieldset>
+					<ul class="list-group visible-xs visible-sm mt-25"
+						ng-repeat="device in order.deviceInfo">
+						<li class="list-group-item"><span class="txt-md">Item
+								{{$index+1}}</span></li>
+						<li class="list-group-item"><span
+							class="col-xs-6 txt-sm brand-txt">Product </span> <span
+							class="col-xs-6 txt-sm">{{device.model | model}} </span></li>
+						<li class="list-group-item"><span
+							class="col-xs-6 txt-sm brand-txt">Color </span> <span
+							class="col-xs-6 txt-sm">{{device.color | color}}</span></li>
+						<li class="list-group-item"><span
+							class="col-xs-6 txt-sm brand-txt">Storage </span> <span
+							class="col-xs-6 txt-sm">{{device.storageDesc}} </span></li>
+						<li class="list-group-item"><span
+							class="col-xs-6 txt-sm brand-txt">Price </span> <span
+							class="col-xs-6 txt-sm">N {{device.cost / 1000}}</span></li>
+					</ul>
+				</fieldset>
+				<fieldset>
+					<div class="title" style="padding-left: 0px;">Shipping
+						Address</div>
+					<div class="txt-lg light">{{pd.name}}</div>
+					<div class="txt-md light">{{pd.shippingAddress}}</div>
+					<div class="txt-xs light">{{pd.city}}{{pd.customCity}}</div>
+					<div class="txt-xs light">{{pd.state}}</div>
+					<div class="txt-sm light">
+						<span class="glyphicon glyphicon-earphone mr-5"></span>{{pd.mobileNo}}
+					</div>
+				</fieldset>
+			</div>
+			<div class="col-md-12 mt-50 mb-25">
+				<span class="brand-txt glyphicon glyphicon-lock mr-5 txt-xs"></span><span
+					class="light brand-txt txt-sm">Your information will not be
+					used for any other purpose and will be kept secure.</span>
+				<div>
+					<span class="light txt-sm">To see how we protect your
+						information, see the <a href="javascript:void(0)">Privacy
+							Policy</a>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-1"></div>
+	<div class="col-md-6">
+		<fieldset>
+			<legend class="brand-txt light">
+				<span class="glyphicon glyphicon-usd mr-5"></span>Payment Options
+			</legend>
+			<div class="alert alert-danger" ng-show="errors.length > 0">
+				<ul>
+					<li ng-repeat="err in errors">{{err}}</li>
+				</ul>
+			</div>
+			<div class="payment_options" ng-click="setPayment('DEL')"
+				ng-class="{selected : order.payment.mode == 'DEL'}">
+				<div class="bold txt-md">1. Delivery: N 0</div>
+				<div class="light">By paying the full price of the phone, you
+					will have priority and are guaranteed to be among the first ones to
+					receive the selected iPhone 6</div>
+			</div>
+			<div class="payment_options mt-25" ng-click="setPayment('EMI')"
+				ng-class="{selected : order.payment.mode == 'EMI'}">
+				<div class="bold txt-md">2. Flexible Monthly Payments through
+					Diamond Bank</div>
+				<div class="light">
+					By opting for EMI option via Diamond Bank, you will be among the
+					third group of customers to receive the iPhone 6, depending on
+					approval of your financing application by <strong>Diamond
+						Bank Monthly Payments</strong>
+				</div>
+			</div>
+			<div class="form-group mt-5" ng-show="order.payment.mode == 'EMI'">
+				<label>Please Select TENOR for EMIs</label> <select
+					class="form-control" ng-model="order.payment.tenor">
+					<option value="3M">3 Months TENOR</option>
+					<option value="6M">6 Months TENOR</option>
+					<option value="11M">11 Months TENOR</option>
+				</select>
+			</div>
+			<div class="payment_options mt-25" ng-click="setPayment('SAVE')"
+				ng-class="{selected : order.payment.mode == 'SAVE'}">
+				<div class="bold txt-md">3. Save Order</div>
+				<div class="light">By paying the full price of the phone, you
+					will have priority and are guaranteed to be among the first ones to
+					receive the selected iPhone 6</div>
+			</div>
+			<div class="form-group mt-25">
+				<label class="ml-5" for="iagree"><input type="checkbox"
+					id="iagree" ng-model="order.payment.terms" ng-true-value="Y"
+					ng-false-value="N" class="" /> I accept the <a href="order#/terms">Terms
+						and Conditions</a></label>
+			</div>
+			<div class="form-group mt-25">
+				<a href="order#/placeorder/shipping?cartId={{cartId}}"
+					class=" btn btn-default btn-lg">Back</a>
+				<button ng-click="updateOrder()" ng-disabled=""
+					class=" btn btn-lg ml-20 btn-success">Proceed</button>
+			</div>
+
+		</fieldset>
+	</div>
+
+
+</div>

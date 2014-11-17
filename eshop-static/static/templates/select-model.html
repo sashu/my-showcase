@@ -1,0 +1,216 @@
+<div class="title" style="margin-top: 0px; font-size: 35px;">Place
+	Order</div>
+<hr>
+<div class="light">
+	<div class="col-md-3 txt-lg brand-txt">
+		1. Select Device <span class="glyphicon glyphicon-chevron-right"></span>
+	</div>
+	<div class="col-md-3 txt-lg">2. Communication Details</div>
+	<div class="col-md-3 txt-lg">3. Payment Selection</div>
+	<div class="col-md-3 txt-lg">4. Confirmation</div>
+</div>
+<hr>
+<div class="col-md-12 mt-50">
+	<div class="col-md-6">
+		<img ng-hide="device.modelImage.length > 2"
+			src="/eshop-static/static/resource/images/iphone.jpg"
+			class="img-responsive hidden-xs hidden-sm" style="max-height: 900px">
+
+		<img src="/eshop-static/static/resource/images/iphone_payment.png"
+			class="img-responsive visible-xs visible-sm"
+			style="max-height: 900px"> <img
+			ng-show="device.modelImage.length > 2"
+			src="/eshop-static/static/resource/images/{{device.modelImage}}"
+			class="img-responsive" style="max-height: 900px">
+	</div>
+	<div class="col-md-6">
+		<img src="/eshop-static/static/resource/images/new_iphone_logo.png"
+			class="delivery img-responsive">
+		<hr>
+		<div class="mt-50">
+			<fieldset class="mt-50" ng-show="errors.length > 0">
+				<div class="alert alert-danger">
+					<ul>
+						<li ng-repeat="error in errors">{{error}}</li>
+					</ul>
+				</div>
+			</fieldset>
+			<fieldset class="mt-50">
+				<legend class="comp-param-lg">1. Choose a model</legend>
+				<div>
+					<div class="box" ng-class="{selected : device.model == 'iph'}"
+						ng-click="setModel('iph')">
+						<span class="bold">iPhone 6</span> <br>4.7-inch display <br>
+						from N 30
+					</div>
+					<div ng-class="{selected : device.model == 'iph_p'}" class="box"
+						ng-click="setModel('iph_p')">
+						<span class="bold">iPhone 6 Plus </span> <br>5.5-inch display
+						<br> from N 40
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="mt-50">
+				<legend class="comp-param-lg">2. Choose a finish</legend>
+				<div>
+					<div ng-class="{color_selected : device.color == '1'}"
+						ng-click="setColor('1')" class="simple-box silver"></div>
+					<div ng-class="{color_selected : device.color == '2'}"
+						ng-click="setColor('2')" class="simple-box gold"></div>
+					<div ng-class="{color_selected : device.color == '3'}"
+						ng-click="setColor('3')" class="simple-box gray"></div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<div class="comp-param-lg ml-20 mt-5 brand-txt">{{device.colorDesc}}</div>
+			</fieldset>
+			<fieldset class="mt-50">
+				<legend class="comp-param-lg">3. Choose storage</legend>
+				<div
+					ng-show="device.model == 'iph' || device.model == null || device.model == ''">
+					<div class="box" ng-repeat="ph in storage.iph"
+						ng-class="{selected : device.storage == ph.key}"
+						ng-click="setStorage(ph.key,ph.space,ph.cost)">
+						<span class="bold">{{ph.space}}</span> <br>{{ph.desc}}
+					</div>
+				</div>
+				<div ng-show="device.model == 'iph_p'">
+					<div class="box" ng-repeat="ph in storage.iph_p"
+						ng-class="{selected : device.storage == ph.key}"
+						ng-click="setStorage(ph.key,ph.space,ph.cost)">
+						<span class="bold">{{ph.space}}</span> <br>{{ph.desc}}
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="mt-50 hidden">
+				<legend class="comp-param-lg">4. Quantity</legend>
+				<div class="form-group">
+					<input class="form-control input-lg quantity ml-20"
+						ng-pattern="/^\d+$/" ng-model="device.quantity" type="text"
+						maxlength="3" />
+				</div>
+			</fieldset>
+		</div>
+		<hr>
+		<div class="mt-25">
+			<div class="alert alert-danger" ng-show="errors.length > 0">Oops
+				!! Seems there are some missing selections !! Scroll above to see
+				the missing selections.</div>
+			<div>
+				<div class="pull-left">
+					<a href="javascript:window.location.href='/eshop/home'"
+						class=" btn btn-default btn-lg">Cancel</a>
+					<button ng-click="showModal()"
+						class=" btn btn-success ml-20 btn-lg">Proceed</button>
+				</div>
+				<div class="pull-right hidden">
+					<button type="button" id="cnf_okay"
+						class="btn btn-success ml-20 btn-lg" ng-if="inv != 'C'"
+						ng-click="addToCart()">
+						<span class="glyphicon glyphicon-shopping-cart mr-5"></span>Add to
+						Cart
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="cnf_modal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title normal brand-txt" id="cnf_modal_title">
+					<span class="glyphicon glyphicon-shopping-cart"></span> Order
+					Summary - <span>{{device.model | model}}</span>
+				</h4>
+			</div>
+			<div class="modal-body" id="cnf_modal_body">
+				<div class="row">
+					<div class="col-md-4">
+						<img ng-show="device.modelImage.length > 2"
+							src="/eshop-static/static/resource/images/{{device.modelImage}}"
+							class="img-responsive">
+					</div>
+					<div class="col-md-8 mt-25">
+						<table class="table table-condensed hidden-xs hidden-sm">
+							<thead class="light brand-txt">
+								<th class="txt-lg">Product</th>
+								<th class="txt-lg">Color</th>
+								<th class="txt-lg">Storage</th>
+								<th class="txt-lg">Quantity</th>
+								<th class="txt-lg">Price</th>
+							</thead>
+							<tbody>
+							<tbody>
+								<tr>
+									<td class="txt-md"><span class="light">{{device.model
+											| model}}</span></td>
+									<td class="txt-md"><span class="light">{{device.color
+											| color}}</span></td>
+									<td class="txt-md"><span class="light">{{device.storageDesc}}</span></td>
+									<td class="txt-md"><span class="bold">{{device.quantity}}</span></td>
+									<td class="txt-md"><span class="bold">N
+											{{device.cost / 1000}}</span></td>
+								</tr>
+							</tbody>
+						</table>
+						<ul class="list-group visible-xs visible-sm">
+							<li class="list-group-item"><span
+								class="col-xs-6 txt-sm brand-txt">Product </span> <span
+								class="col-xs-6 txt-sm">{{device.model | model}} </span></li>
+							<li class="list-group-item"><span
+								class="col-xs-6 txt-sm brand-txt">Color </span> <span
+								class="col-xs-6 txt-sm">{{device.color | color}}</span></li>
+							<li class="list-group-item"><span
+								class="col-xs-6 txt-sm brand-txt">Storage </span> <span
+								class="col-xs-6 txt-sm">{{device.storageDesc}} </span></li>
+							<li class="list-group-item"><span
+								class="col-xs-6 txt-sm brand-txt">Price </span> <span
+								class="col-xs-6 txt-sm">N {{device.cost / 1000}}</span></li>
+						</ul>
+						<div class="row mt-50">
+							<center>
+								<div class="col-md-2 mt-20">
+									<img src="/eshop-static/static/resource/images/flexi.png"
+										class="img-responsive img-benefit"> <span class="txt-sm">Flexible
+										Monthly Payments through Diamond Bank</span>
+								</div>
+								<div class="col-md-2 mt-20">
+									<img src="/eshop-static/static/resource/images/warranty.png"
+										class="img-responsive img-benefit"> <span class="txt-sm">Official
+										product with manufacturer's warranty</span>
+								</div>
+								<div class="col-md-2 mt-20">
+									<img src="/eshop-static/static/resource/images/genuine.png"
+										class="img-responsive img-benefit"> <span class="txt-sm">Amazing
+										data offers</span>
+								</div>
+								<div class="col-md-2 mt-20">
+									<img src="/eshop-static/static/resource/images/peace.png"
+										class="img-responsive img-benefit"> <span class="txt-sm">Peace
+										of mind</span>
+								</div>
+								<div class="col-md-2 mt-20">
+									<img src="/eshop-static/static/resource/images/delivery.png"
+										class="img-responsive img-benefit"> <span class="txt-sm">Free
+										Delivery</span>
+								</div>
+							</center>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="cnf_close" class="btn btn-default"
+					data-dismiss="modal">
+					Modify <span class="glyphicon glyphicon-edit"></span>
+				</button>
+				<button type="button" id="cnf_okay" class="btn btn-success ml-20"
+					data-dismiss="modal" ng-click="saveData()">
+					Continue <span class="glyphicon glyphicon-play"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
