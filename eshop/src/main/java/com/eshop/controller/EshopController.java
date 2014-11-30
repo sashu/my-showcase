@@ -26,7 +26,6 @@ import com.eshop.model.City;
 import com.eshop.model.DeviceInfo;
 import com.eshop.model.Order;
 
-
 @Controller
 public class EshopController {
 
@@ -59,11 +58,11 @@ public class EshopController {
 	}
 
 	@RequestMapping(value = "/placeorder", method = RequestMethod.POST)
-	public @ResponseBody String updateOrder(HttpSession session) {
+	public @ResponseBody String updateOrder(@RequestBody DeviceInfo info,
+			HttpSession session) {
 		String uuid = UUID.randomUUID().toString();
 		if (session.getAttribute("ORDER") == null) {
 			Order order = new Order();
-			DeviceInfo info = new DeviceInfo();
 			info.setCartId(uuid);
 			List<DeviceInfo> deviceInfo = new ArrayList<DeviceInfo>();
 			deviceInfo.add(info);
@@ -71,11 +70,25 @@ public class EshopController {
 			session.setAttribute("ORDER", order);
 		} else {
 			Order order = (Order) session.getAttribute("ORDER");
-			DeviceInfo info = new DeviceInfo();
 			info.setCartId(uuid);
 			order.getDeviceInfo().add(info);
 		}
 		return uuid;
+	}
+
+	@RequestMapping(value = "/removeDevice", method = RequestMethod.POST)
+	public @ResponseBody String removeDevice(@RequestBody String uuid,
+			HttpSession session) {
+		Order order = (Order) session.getAttribute("ORDER");
+		if (order != null && order.getDeviceInfo() != null) {
+			Iterator<DeviceInfo> devices = order.getDeviceInfo().iterator();
+			while (devices.hasNext()) {
+				if (devices.next().getCartId().equalsIgnoreCase(uuid)) {
+					devices.remove();
+				}
+			}
+		}
+		return "S";
 	}
 
 	@RequestMapping(value = "/updateorder", method = RequestMethod.POST)
@@ -108,7 +121,7 @@ public class EshopController {
 			String key = (String) iterator.next();
 			recieptVals.put(key, (String) request.getParameter(key));
 		}
-		
+
 		String ip = request.getRemoteAddr();
 		Order order = (Order) session.getAttribute("ORDER");
 
@@ -140,7 +153,6 @@ public class EshopController {
 		return "success";
 	}
 
-	
 	@RequestMapping(value = "/confirm", method = RequestMethod.GET)
 	public String getConfirm(HttpSession session, HttpServletRequest request) {
 		session.removeAttribute("ORDER");

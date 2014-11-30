@@ -12,4 +12,7 @@
 <script type="text/javascript" language="javascript" src="/eshop-static/static/resource/app/eshop.angular.js"></script>
 <script type="text/javascript" language="javascript" src="/eshop-static/static/resource/app/eshop.ctrl.js"></script>
     
-
+<script type="text/javascript" language="javascript" src="/eshop-static/static/resource/app/confirm.ctrl.js"></script>
+<script type="text/javascript" language="javascript" src="/eshop-static/static/resource/app/payment.ctrl.js"></script>
+<script type="text/javascript" language="javascript" src="/eshop-static/static/resource/app/personaldetail.ctrl.js"></script>
+<script type="text/javascript" language="javascript" src="/eshop-static/static/resource/app/selection.ctrl.js"></script>

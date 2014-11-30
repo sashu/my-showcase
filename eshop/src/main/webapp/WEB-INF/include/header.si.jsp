@@ -20,18 +20,10 @@
 				<li><a href="javascript:void(0)"><span
 						class="glyphicon glyphicon-indent-left pr-5"></span>Track Your
 						Order</a></li>
-				<li class="font-md brand-txt"><a href="javascript:void(0)"
-					class="dropdown-toggle brand-txt" id="dropdownMenu1"
-					data-toggle="dropdown" aria-expanded="true"><span
+				<li class="font-md brand-txt"><a href="javascript:void(0)" ng-click="viewCart()"
+					class=" brand-txt"><span
 						class="glyphicon glyphicon-shopping-cart pr-5"></span>My Cart
-						({{cart.deviceInfo.length}}) <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu"
-						aria-labelledby="dropdownMenu1">
-						<li role="presentation" ng-repeat="device in cart.deviceInfo"><a
-							role="menuitem" tabindex="-1"
-							href="order#/placeorder/model?cartId={{device.cartId}}&inv=C">{{device.model
-								| model}} ({{device.color | color}})</a></li>
-					</ul></li>
+						({{orderSummary.deviceInfo.length}}) </a></li>
 				<li><a href="javascript:void(0)"><span
 						class="glyphicon glyphicon-phone-alt mr-5"></span>Customer Care</a></li>
 

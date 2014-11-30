@@ -65,6 +65,28 @@
 		</div>
 	</div>
 
+	<div ng-controller="OrderController">
+		<div ng-include="summaryTemplate"></div>
+	</div>
+	<div class="modal fade" id="gn_modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true" id="gn_upper_close">&times;</button>
+					<h4 class="modal-title" id="gn_modal_title"></h4>
+				</div>
+				<div class="modal-body" id="gn_modal_body">
+					<div class="alert"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="gn_close" class="btn btn-default"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<footer>
 		<%@ include file="/WEB-INF/include/footer.jsp"%>
 	</footer>
