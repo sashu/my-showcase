@@ -1,38 +1,60 @@
 eshopApp
 		.controller(
 				'SelectModelController',
-				function($scope, $http, $location, EService) {
+				function($rootScope, $scope, $http, $location, EService) {
 
+					$scope.editMode = 'F';
 					$scope.storage = storage;
 					var cartId = $location.search().cartId;
 					$scope.inv = $location.search().cartId;
 
-					EService
-							.fetchOrder(
-									function(data, status) {
-										if (data == undefined || data == null
-												|| data == "") {
-											createAndShowModal(
-													"No Data for Payment",
-													"You have no items selected in your cart. Place an order from home.",
-													function() {
-														window.location.href = "/eshop/home";
-													});
-										}
-										$scope.order = data;
-										$scope.device = getDevice(cartId,
-												data.deviceInfo);
-										if ($scope.device.model != null
-												|| $scope.device.model != undefined) {
-											$scope.inv = 'C';
-										}
-										$scope.device.quantity = "1";
-									}, function(data, status) {
-										handleResponse(data, status);
-									});
+					if (cartId != null || cartId != undefined) {
+						$scope.editMode = 'T';
+						EService
+								.fetchOrder(
+										function(data, status) {
+											if (data == undefined
+													|| data == null
+													|| data == "") {
+												createAndShowModal(
+														"No Data for Payment",
+														"You have no items selected in your cart. Place an order from home.",
+														function() {
+															window.location.href = "/eshop/home";
+														});
+											}
+											$scope.order = data;
+											$scope.device = getDevice(cartId,
+													data.deviceInfo);
+											if ($scope.device.model != null
+													|| $scope.device.model != undefined) {
+												$scope.inv = 'C';
+											}
+											$scope.device.quantity = "1";
+										}, function(data, status) {
+											handleResponse(data, status);
+										});
+					} else {
+						$scope.device = {};
+						$scope.device.quantity = "1";
+						$scope.order = {};
+						EService.fetchOrder(function(data, status) {
+							$scope.order = data;
+						}, function(data, status) {
+							handleResponse(data, status);
+						});
+					}
 
 					$scope.addToCart = function() {
-
+						$scope.errors = validateDevice();
+						if ($scope.errors.length == 0) {
+							EService.placeOrder($scope.device, function(data,
+									status) {
+								window.location.reload();
+							}, function(data, status) {
+								handleResponse(data, status);
+							});
+						}
 					}
 
 					function getDevice(cartId, list) {
@@ -71,17 +93,20 @@ eshopApp
 					}
 
 					$scope.saveData = function() {
-						jq('.modal-backdrop').remove();
-						removeFromArray(
-								$scope.order.deviceInfo,
-								getDeviceIndex($scope.order.deviceInfo, cartId),
-								1);
-						$scope.order.deviceInfo.push($scope.device);
-						EService.update($scope.order, function(data, status) {
-							$location.path('/placeorder/shipping');
-						}, function(data, status) {
-							handleResponse(data, status);
-						});
+						$scope.errors = validateDevice();
+						if ($scope.errors.length == 0) {
+							removeFromArray($scope.order.deviceInfo,
+									getDeviceIndex($scope.order.deviceInfo,
+											cartId), 1);
+							$scope.order.deviceInfo.push($scope.device);
+							EService.update($scope.order,
+									function(data, status) {
+										showModal('order_summary');
+										$rootScope.orderSummary = $scope.order;
+									}, function(data, status) {
+										handleResponse(data, status);
+									});
+						}
 					}
 
 					function getDeviceIndex(list, cartId) {

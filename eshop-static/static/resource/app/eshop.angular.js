@@ -121,10 +121,11 @@ eshopApp.factory('EService', function($http) {
 				method : 'GET',
 			}).success(successCallback).error(errorCallback);
 		},
-		placeOrder : function(successCallback, errorCallback) {
+		placeOrder : function(data, successCallback, errorCallback) {
 			$http({
 				url : '/eshop/placeorder',
 				method : 'POST',
+				data : data
 			}).success(successCallback).error(errorCallback);
 		},
 		transresult : function(successCallback, errorCallback) {
@@ -137,6 +138,13 @@ eshopApp.factory('EService', function($http) {
 			$http({
 				url : '/eshop/clearOrder',
 				method : 'GET',
+			}).success(successCallback).error(errorCallback);
+		},
+		removeDevice : function(data, successCallback, errorCallback) {
+			$http({
+				url : '/eshop/removeDevice',
+				method : 'POST',
+				data : data,
 			}).success(successCallback).error(errorCallback);
 		}
 	};

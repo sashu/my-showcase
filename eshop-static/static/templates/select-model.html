@@ -99,117 +99,17 @@
 			<div>
 				<div class="pull-left">
 					<a href="javascript:window.location.href='/eshop/home'"
-						class=" btn btn-default btn-lg">Cancel</a>
-					<button ng-click="showModal()"
-						class=" btn btn-success ml-20 btn-lg">Proceed</button>
-				</div>
-				<div class="pull-right hidden">
-					<button type="button" id="cnf_okay"
-						class="btn btn-success ml-20 btn-lg" ng-if="inv != 'C'"
-						ng-click="addToCart()">
+						class=" btn btn-default">Cancel</a>
+					<button type="button" id="cnf_okay" class="btn btn-success ml-20"
+						ng-if="editMode == 'F'" ng-click="addToCart()">
 						<span class="glyphicon glyphicon-shopping-cart mr-5"></span>Add to
 						Cart
 					</button>
+					<button type="button" id="cnf_okay" class="btn btn-primary ml-20"
+						ng-if="editMode == 'T'" ng-click="saveData()">
+						<span class="glyphicon glyphicon-shopping-cart mr-5"></span>Update
+					</button>
 				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="cnf_modal">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title normal brand-txt" id="cnf_modal_title">
-					<span class="glyphicon glyphicon-shopping-cart"></span> Order
-					Summary - <span>{{device.model | model}}</span>
-				</h4>
-			</div>
-			<div class="modal-body" id="cnf_modal_body">
-				<div class="row">
-					<div class="col-md-4">
-						<img ng-show="device.modelImage.length > 2"
-							src="/eshop-static/static/resource/images/{{device.modelImage}}"
-							class="img-responsive">
-					</div>
-					<div class="col-md-8 mt-25">
-						<table class="table table-condensed hidden-xs hidden-sm">
-							<thead class="light brand-txt">
-								<th class="txt-lg">Product</th>
-								<th class="txt-lg">Color</th>
-								<th class="txt-lg">Storage</th>
-								<th class="txt-lg">Quantity</th>
-								<th class="txt-lg">Price</th>
-							</thead>
-							<tbody>
-							<tbody>
-								<tr>
-									<td class="txt-md"><span class="light">{{device.model
-											| model}}</span></td>
-									<td class="txt-md"><span class="light">{{device.color
-											| color}}</span></td>
-									<td class="txt-md"><span class="light">{{device.storageDesc}}</span></td>
-									<td class="txt-md"><span class="bold">{{device.quantity}}</span></td>
-									<td class="txt-md"><span class="bold">N
-											{{device.cost / 1000}}</span></td>
-								</tr>
-							</tbody>
-						</table>
-						<ul class="list-group visible-xs visible-sm">
-							<li class="list-group-item"><span
-								class="col-xs-6 txt-sm brand-txt">Product </span> <span
-								class="col-xs-6 txt-sm">{{device.model | model}} </span></li>
-							<li class="list-group-item"><span
-								class="col-xs-6 txt-sm brand-txt">Color </span> <span
-								class="col-xs-6 txt-sm">{{device.color | color}}</span></li>
-							<li class="list-group-item"><span
-								class="col-xs-6 txt-sm brand-txt">Storage </span> <span
-								class="col-xs-6 txt-sm">{{device.storageDesc}} </span></li>
-							<li class="list-group-item"><span
-								class="col-xs-6 txt-sm brand-txt">Price </span> <span
-								class="col-xs-6 txt-sm">N {{device.cost / 1000}}</span></li>
-						</ul>
-						<div class="row mt-50">
-							<center>
-								<div class="col-md-2 mt-20">
-									<img src="/eshop-static/static/resource/images/flexi.png"
-										class="img-responsive img-benefit"> <span class="txt-sm">Flexible
-										Monthly Payments through Diamond Bank</span>
-								</div>
-								<div class="col-md-2 mt-20">
-									<img src="/eshop-static/static/resource/images/warranty.png"
-										class="img-responsive img-benefit"> <span class="txt-sm">Official
-										product with manufacturer's warranty</span>
-								</div>
-								<div class="col-md-2 mt-20">
-									<img src="/eshop-static/static/resource/images/genuine.png"
-										class="img-responsive img-benefit"> <span class="txt-sm">Amazing
-										data offers</span>
-								</div>
-								<div class="col-md-2 mt-20">
-									<img src="/eshop-static/static/resource/images/peace.png"
-										class="img-responsive img-benefit"> <span class="txt-sm">Peace
-										of mind</span>
-								</div>
-								<div class="col-md-2 mt-20">
-									<img src="/eshop-static/static/resource/images/delivery.png"
-										class="img-responsive img-benefit"> <span class="txt-sm">Free
-										Delivery</span>
-								</div>
-							</center>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" id="cnf_close" class="btn btn-default"
-					data-dismiss="modal">
-					Modify <span class="glyphicon glyphicon-edit"></span>
-				</button>
-				<button type="button" id="cnf_okay" class="btn btn-success ml-20"
-					data-dismiss="modal" ng-click="saveData()">
-					Continue <span class="glyphicon glyphicon-play"></span>
-				</button>
 			</div>
 		</div>
 	</div>

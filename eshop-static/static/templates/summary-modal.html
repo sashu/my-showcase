@@ -1,0 +1,121 @@
+<div class="modal fade" id="order_summary"
+	ng-controller="SummaryController">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title normal brand-txt" id="cnf_modal_title">
+					<span class="glyphicon glyphicon-shopping-cart"></span>My Cart</span>
+				</h4>
+			</div>
+			<div class="modal-body" id="cnf_modal_body">
+				<div class="row">
+					<div class="col-md-12 mt-25">
+						<table class="table table-condensed hidden-xs hidden-sm">
+							<thead class="light brand-txt">
+								<th class="txt-lg"></th>
+								<th class="txt-lg">Product</th>
+								<th class="txt-lg">Color</th>
+								<th class="txt-lg">Storage</th>
+								<th class="txt-lg">Quantity</th>
+								<th class="txt-lg">Price</th>
+								<th class="txt-lg">Edit</th>
+							</thead>
+							<tbody>
+							<tbody>
+								<tr ng-repeat="device in orderSummary.deviceInfo">
+									<td class="txt-md"><span class="light"><img
+											style="max-height: 50px;"
+											ng-show="device.modelImage.length > 2"
+											src="/eshop-static/static/resource/images/{{device.modelImage}}"
+											class="img-responsive"></span></td>
+									<td class="txt-md"><span class="light">{{device.model
+											| model}}</span></td>
+									<td class="txt-md"><span class="light">{{device.color
+											| color}}</span></td>
+									<td class="txt-md"><span class="light">{{device.storageDesc}}</span></td>
+									<td class="txt-md"><span class="bold">{{device.quantity}}</span></td>
+									<td class="txt-md"><span class="bold">N
+											{{device.cost / 1000}}</span></td>
+									<td class="txt-md"><button class="btn btn-xs btn-info"
+											ng-click="modify(device.cartId)">
+											<span class="glyphicon glyphicon-edit"></span> Modify
+										</button>
+										<button class="btn btn-xs btn-default"
+											ng-click="remove(device.cartId)">
+											<span class="glyphicon glyphicon-remove"></span> Remove
+										</button></td>
+								</tr>
+							</tbody>
+						</table>
+						<ul class="list-group visible-xs visible-sm"
+							ng-repeat="device in orderSummary.deviceInfo">
+							<li class="list-group-item"><img style="max-height: 50px;"
+								ng-show="device.modelImage.length > 2"
+								src="/eshop-static/static/resource/images/{{device.modelImage}}"
+								class="img-responsive"></li>
+							<li class="list-group-item"><span
+								class="col-xs-6 txt-sm brand-txt">Product </span> <span
+								class="col-xs-6 txt-sm">{{device.model | model}} </span></li>
+							<li class="list-group-item"><span
+								class="col-xs-6 txt-sm brand-txt">Color </span> <span
+								class="col-xs-6 txt-sm">{{device.color | color}}</span></li>
+							<li class="list-group-item"><span
+								class="col-xs-6 txt-sm brand-txt">Storage </span> <span
+								class="col-xs-6 txt-sm">{{device.storageDesc}} </span></li>
+							<li class="list-group-item"><span
+								class="col-xs-6 txt-sm brand-txt">Price </span> <span
+								class="col-xs-6 txt-sm">N {{device.cost / 1000}}</span></li>
+							<li class="list-group-item">
+								<button class="btn btn-info" ng-click="modify(device.cartId)">
+									<span class="glyphicon glyphicon-edit"></span> Modify
+								</button>
+								<button class="btn btn-default" ng-click="remove(device.cartId)">
+									<span class="glyphicon glyphicon-remove"></span> Remove
+								</button>
+							</li>
+						</ul>
+						<div class="row mt-50">
+							<center>
+								<div class="col-md-2 mt-20">
+									<img src="/eshop-static/static/resource/images/flexi.png"
+										class="img-responsive img-benefit"> <span class="txt-sm">Flexible
+										Monthly Payments through Diamond Bank</span>
+								</div>
+								<div class="col-md-2 mt-20">
+									<img src="/eshop-static/static/resource/images/warranty.png"
+										class="img-responsive img-benefit"> <span class="txt-sm">Official
+										product with manufacturer's warranty</span>
+								</div>
+								<div class="col-md-2 mt-20">
+									<img src="/eshop-static/static/resource/images/genuine.png"
+										class="img-responsive img-benefit"> <span class="txt-sm">Amazing
+										data offers</span>
+								</div>
+								<div class="col-md-2 mt-20">
+									<img src="/eshop-static/static/resource/images/peace.png"
+										class="img-responsive img-benefit"> <span class="txt-sm">Peace
+										of mind</span>
+								</div>
+								<div class="col-md-2 mt-20">
+									<img src="/eshop-static/static/resource/images/delivery.png"
+										class="img-responsive img-benefit"> <span class="txt-sm">Free
+										Delivery</span>
+								</div>
+							</center>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="cnf_close" class="btn btn-default"
+					data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle mr-5"></span>Close
+				</button>
+				<button type="button" id="cnf_okay" class="btn btn-success ml-20"
+					data-dismiss="modal" ng-click="shipCart()">
+					Continue <span class="glyphicon glyphicon-play"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

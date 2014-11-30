@@ -1,31 +1,82 @@
+eshopApp
+		.controller(
+				'OrderController',
+				function($scope, $http, $location, EService) {
+					$scope.summaryTemplate = '/eshop-static/static/templates/summary-modal.html';
+					$scope.placeOrder = function() {
+						window.location.href = "order#/placeorder/model";
+					}
+				});
 
-eshopApp.controller('OrderController', function($scope, $http, $location,
-		EService) {
-	$scope.placeOrder = function() {
-		EService.placeOrder(function(data, status) {
-			var cartId = data;
-			window.location.href = "order#/placeorder/model?cartId=" + cartId;
+eshopApp.controller('SummaryController', function($rootScope, $scope, $http,
+		$location, EService) {
+	$rootScope.orderSummary = {};
+	EService.fetchOrder(function(data, status) {
+		$rootScope.orderSummary = data;
+	}, function(data, status) {
+		handleResponse(data, status);
+	});
 
+	$scope.modify = function(cartId) {
+		hideModal('order_summary');
+		window.location.href = "order#/placeorder/model?cartId=" + cartId;
+	}
+
+	$scope.shipCart = function() {
+		hideModal('order_summary');
+		window.location.href = "order#/placeorder/shipping";
+	}
+
+	$scope.remove = function(cartId) {
+		EService.removeDevice(cartId, function(data, status) {
+			removeFromArray($scope.orderSummary.deviceInfo, getDeviceIndex(
+					$scope.orderSummary.deviceInfo, cartId), 1);
+			if ($scope.orderSummary.deviceInfo.length == 0) {
+				goTo('home');
+			} else {
+				window.location.href = "order#/placeorder/model";
+			}
 		}, function(data, status) {
 			handleResponse(data, status);
 		});
 	}
-});
 
-eshopApp.controller('CartController', function($scope, $http, $location,
-		EService) {
-	EService.fetchOrder(function(data, status) {
-		$scope.cart = data;
-		if (data == null || data == "" || data == undefined) {
-			$scope.cart = {};
-			$scope.cart.deviceInfo = [];
+	function getDeviceIndex(list, cartId) {
+		for (var i = 0; i < list.length; i++) {
+			var d = list[i];
+			if (d.cartId == cartId) {
+				return i
+			}
 		}
-	}, function(data, status) {
-		handleResponse(data, status);
-	});
+	}
 });
 
+eshopApp
+		.controller(
+				'CartController',
+				function($scope, $rootScope, $http, $location, EService) {
+					$scope.summaryTemplate = '/eshop-static/static/templates/summary-modal.html';
+					EService.fetchOrder(function(data, status) {
+						$scope.cart = data;
+						if (data == null || data == "" || data == undefined) {
+							$scope.cart = {};
+							$scope.cart.deviceInfo = [];
+						}
+					}, function(data, status) {
+						handleResponse(data, status);
+					});
 
+					$scope.viewCart = function() {
+						if ($scope.cart.deviceInfo.length == 0) {
+							createAndShowModal(
+									"Cart is Empty !!",
+									"You do not have anything in your cart right now.",
+									null);
+						} else {
+							showModal('order_summary');
+						}
+					};
+				});
 
 eshopApp.controller('TransResultController', function($scope, $http, $location,
 		EService) {
