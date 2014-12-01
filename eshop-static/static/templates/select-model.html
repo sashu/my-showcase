@@ -15,10 +15,10 @@
 		<img ng-hide="device.modelImage.length > 2"
 			src="/eshop-static/static/resource/images/iphone.jpg"
 			class="img-responsive hidden-xs hidden-sm" style="max-height: 900px">
-
 		<img src="/eshop-static/static/resource/images/iphone_payment.png"
-			class="img-responsive visible-xs visible-sm"
-			style="max-height: 900px"> <img
+			class="img-responsive visible-xs visible-sm" ng-if="device.modelImage == null || device.modelImage.length < 2"
+			style="max-height: 900px"> 
+		<img
 			ng-show="device.modelImage.length > 2"
 			src="/eshop-static/static/resource/images/{{device.modelImage}}"
 			class="img-responsive" style="max-height: 900px">
