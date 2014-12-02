@@ -169,9 +169,15 @@ public class EshopController {
 		long amt = 0;
 		if (order != null && order.getDeviceInfo() != null) {
 			for (DeviceInfo info : order.getDeviceInfo()) {
+				int quantity = 0;
+				try {
+					quantity = Integer.valueOf(info.getQuantity());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				if (info.getCost() != null) {
 					Long cost = new Long(info.getCost());
-					amt = amt + cost;
+					amt = amt + cost * quantity;
 				}
 			}
 		}
