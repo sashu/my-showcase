@@ -8,6 +8,16 @@ eshopApp
 					var cartId = $location.search().cartId;
 					$scope.inv = $location.search().cartId;
 
+					$scope.quantityList = getQuantityList();
+
+					function getQuantityList() {
+						var tempArr = [];
+						for (i = 1; i <= 100; i++) {
+							tempArr.push(i);
+						}
+						return tempArr;
+					}
+
 					if (cartId != null || cartId != undefined) {
 						$scope.editMode = 'T';
 						EService
@@ -30,13 +40,11 @@ eshopApp
 													|| $scope.device.model != undefined) {
 												$scope.inv = 'C';
 											}
-											$scope.device.quantity = "1";
 										}, function(data, status) {
 											handleResponse(data, status);
 										});
 					} else {
 						$scope.device = {};
-						$scope.device.quantity = "1";
 						$scope.order = {};
 						EService.fetchOrder(function(data, status) {
 							$scope.order = data;

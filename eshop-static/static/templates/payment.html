@@ -19,12 +19,13 @@
 					class="img-responsive">
 			</div>
 			<div class="col-md-12 mt-25">
-				<div class="title" style="padding-left: 0px;">Order Summary</div>
+				<span class="title" style="padding-left: 0px;">Order Summary</span>
 				<table class="table table-condensed hidden-xs hidden-sm">
 					<thead class="light brand-txt">
 						<th class="txt-md">Product</th>
 						<th class="txt-md">Color</th>
 						<th class="txt-md">Storage</th>
+						<th class="txt-md">Quantity</th>
 						<th class="txt-md">Price</th>
 					</thead>
 					<tbody>
@@ -35,43 +36,40 @@
 							<td class="txt-sm"><span class="light">{{device.color
 									| color}}</span></td>
 							<td class="txt-sm"><span class="light">{{device.storageDesc}}</span></td>
-							<td class="txt-sm"><span class="bold">N {{device.cost
-									/ 1000}}</span></td>
+							<td class="txt-sm"><span class="light">{{device.quantity}}</span></td>
+							<td class="txt-sm"><span class="bold">N
+									{{device.cost*device.quantity / 1000}}</span></td>
 						</tr>
 					</tbody>
 				</table>
-
-				<fieldset>
-					<ul class="list-group visible-xs visible-sm mt-25"
-						ng-repeat="device in order.deviceInfo">
-						<li class="list-group-item"><span class="txt-md">Item
-								{{$index+1}}</span></li>
-						<li class="list-group-item"><span
-							class="col-xs-6 txt-sm brand-txt">Product </span> <span
-							class="col-xs-6 txt-sm">{{device.model | model}} </span></li>
-						<li class="list-group-item"><span
-							class="col-xs-6 txt-sm brand-txt">Color </span> <span
-							class="col-xs-6 txt-sm">{{device.color | color}}</span></li>
-						<li class="list-group-item"><span
-							class="col-xs-6 txt-sm brand-txt">Storage </span> <span
-							class="col-xs-6 txt-sm">{{device.storageDesc}} </span></li>
-						<li class="list-group-item"><span
-							class="col-xs-6 txt-sm brand-txt">Price </span> <span
-							class="col-xs-6 txt-sm">N {{device.cost / 1000}}</span></li>
-					</ul>
-				</fieldset>
-				<fieldset>
-					<div class="title" style="padding-left: 0px;">Shipping
-						Address</div>
-					<div class="txt-lg light">{{pd.name}}</div>
-					<div class="txt-md light">{{pd.shippingAddress}}</div>
-					<div class="txt-xs light">{{pd.city}}{{pd.customCity}}</div>
-					<div class="txt-xs light">{{pd.state}}</div>
-					<div class="txt-sm light">
-						<span class="glyphicon glyphicon-earphone mr-5"></span>{{pd.mobileNo}}
-					</div>
-				</fieldset>
+				<ul class="list-group visible-xs visible-sm"
+					ng-repeat="device in order.deviceInfo">
+					<li class="list-group-item"><span class="txt-md">Item
+							{{$index+1}}</span></li>
+					<li class="list-group-item"><span
+						class="col-xs-6 txt-sm brand-txt">Product </span> <span
+						class="col-xs-6 txt-sm">{{device.model | model}} </span></li>
+					<li class="list-group-item"><span
+						class="col-xs-6 txt-sm brand-txt">Color </span> <span
+						class="col-xs-6 txt-sm">{{device.color | color}}</span></li>
+					<li class="list-group-item"><span
+						class="col-xs-6 txt-sm brand-txt">Storage </span> <span
+						class="col-xs-6 txt-sm">{{device.storageDesc}} </span></li>
+					<li class="list-group-item"><span
+						class="col-xs-6 txt-sm brand-txt">Quantity </span> <span
+						class="col-xs-6 txt-sm">{{device.quantity}}</span></li>
+					<li class="list-group-item"><span
+						class="col-xs-6 txt-sm brand-txt">Price </span> <span
+						class="col-xs-6 txt-sm">N {{device.cost*device.quantity /
+							1000}}</span></li>
+				</ul>
+				<hr>
+				<div class="pull-right">
+					<span class="light txt-lg brand-txt mr-20">Total:</span> <span
+						class="bold txt-lg mr-20">N {{totalAmt()/1000}}</span>
+				</div>
 			</div>
+
 			<div class="col-md-12 mt-50 mb-25">
 				<span class="brand-txt glyphicon glyphicon-lock mr-5 txt-xs"></span><span
 					class="light brand-txt txt-sm">Your information will not be

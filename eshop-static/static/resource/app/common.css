@@ -91,6 +91,10 @@ h1, h2, h3, h4, h5, h6, h7 {
 	margin-right: 5px;
 }
 
+.mr-20 {
+	margin-right: 20px;
+}
+
 .mb-5 {
 	margin-bottom: 5px;
 }
@@ -306,7 +310,7 @@ h1, h2, h3, h4, h5, h6, h7 {
 }
 
 .quantity {
-	max-width: 70px;
+	max-width: 100px;
 }
 
 .step-sel {

@@ -17,6 +17,16 @@ eshopApp.controller('SummaryController', function($rootScope, $scope, $http,
 		handleResponse(data, status);
 	});
 
+	$scope.totalAmt = function() {
+		var total = 0;
+		for (var i = 0; i < $rootScope.orderSummary.deviceInfo.length; i++) {
+			var d = $rootScope.orderSummary.deviceInfo[i];
+			total = total + d.quantity * d.cost;
+		}
+
+		return total;
+	}
+
 	$scope.modify = function(cartId) {
 		hideModal('order_summary');
 		window.location.href = "order#/placeorder/model?cartId=" + cartId;

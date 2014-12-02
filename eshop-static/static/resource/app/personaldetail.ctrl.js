@@ -10,6 +10,16 @@ eshopApp
 					}, function(data, status) {
 						handleResponse(data, status);
 					});
+					
+					$scope.totalAmt = function() {
+						var total = 0;
+						for (var i = 0; i < $scope.order.deviceInfo.length; i++) {
+							var d = $scope.order.deviceInfo[i];
+							total = total + d.quantity * d.cost;
+						}
+
+						return total;
+					}
 
 					EService
 							.fetchOrder(

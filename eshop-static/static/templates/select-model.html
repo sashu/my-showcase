@@ -16,9 +16,9 @@
 			src="/eshop-static/static/resource/images/iphone.jpg"
 			class="img-responsive hidden-xs hidden-sm" style="max-height: 900px">
 		<img src="/eshop-static/static/resource/images/iphone_payment.png"
-			class="img-responsive visible-xs visible-sm" ng-if="device.modelImage == null || device.modelImage.length < 2"
-			style="max-height: 900px"> 
-		<img
+			class="img-responsive visible-xs visible-sm"
+			ng-if="device.modelImage == null || device.modelImage.length < 2"
+			style="max-height: 900px"> <img
 			ng-show="device.modelImage.length > 2"
 			src="/eshop-static/static/resource/images/{{device.modelImage}}"
 			class="img-responsive" style="max-height: 900px">
@@ -82,12 +82,13 @@
 					</div>
 				</div>
 			</fieldset>
-			<fieldset class="mt-50 hidden">
+			<fieldset class="mt-50">
 				<legend class="comp-param-lg">4. Quantity</legend>
 				<div class="form-group">
-					<input class="form-control input-lg quantity ml-20"
-						ng-pattern="/^\d+$/" ng-model="device.quantity" type="text"
-						maxlength="3" />
+					<select ng-model="device.quantity"
+						class="form-control input-lg quantity ml-20">
+						<option ng-repeat="item in quantityList" value="{{item}}">{{item}}</option>
+					</select>
 				</div>
 			</fieldset>
 		</div>

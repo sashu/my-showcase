@@ -12,7 +12,7 @@
 </div>
 <hr>
 <div class="col-md-12 mt-50">
-	<div class="col-md-4">
+	<div class="col-md-6">
 		<div class="row">
 			<div class="col-md-12">
 				<img src="/eshop-static/static/resource/images/iphone6-summary.jpg"
@@ -25,6 +25,7 @@
 						<th class="txt-md">Product</th>
 						<th class="txt-md">Color</th>
 						<th class="txt-md">Storage</th>
+						<th class="txt-md">Quantity</th>
 						<th class="txt-md">Price</th>
 					</thead>
 					<tbody>
@@ -35,7 +36,9 @@
 							<td class="txt-sm"><span class="light">{{device.color
 									| color}}</span></td>
 							<td class="txt-sm"><span class="light">{{device.storageDesc}}</span></td>
-							<td class="txt-sm"><span class="bold">N {{device.cost / 1000}}</span></td>
+							<td class="txt-sm"><span class="light">{{device.quantity}}</span></td>
+							<td class="txt-sm"><span class="bold">N
+									{{device.cost*device.quantity / 1000}}</span></td>
 						</tr>
 					</tbody>
 				</table>
@@ -53,10 +56,20 @@
 						class="col-xs-6 txt-sm brand-txt">Storage </span> <span
 						class="col-xs-6 txt-sm">{{device.storageDesc}} </span></li>
 					<li class="list-group-item"><span
+						class="col-xs-6 txt-sm brand-txt">Quantity </span> <span
+						class="col-xs-6 txt-sm">{{device.quantity}}</span></li>
+					<li class="list-group-item"><span
 						class="col-xs-6 txt-sm brand-txt">Price </span> <span
-						class="col-xs-6 txt-sm">N {{device.cost / 1000}}</span></li>
+						class="col-xs-6 txt-sm">N {{device.cost*device.quantity /
+							1000}}</span></li>
 				</ul>
+				<hr>
+				<div class="pull-right">
+					<span class="light txt-lg brand-txt mr-20">Total:</span> <span
+						class="bold txt-lg mr-20">N {{totalAmt()/1000}}</span>
+				</div>
 			</div>
+
 			<div class="col-md-12 mt-50">
 				<span class="brand-txt glyphicon glyphicon-lock mr-5 txt-md"></span><span
 					class="light brand-txt txt-md">Your information will not be
@@ -70,7 +83,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3"></div>
+	<div class="col-md-1"></div>
 	<div class="col-md-4 mt-50">
 		<form role="form" name="detailsForm" novalidate
 			ng-submit="detailsForm.$valid && saveData()">
@@ -82,7 +95,8 @@
 				<div>
 					<div class="form-group">
 						<label>Name</label> <input type="text" class="form-control"
-							required ng-model="pd.name" placeholder="Full Name" maxlength="100">
+							required ng-model="pd.name" placeholder="Full Name"
+							maxlength="100">
 					</div>
 					<div class="form-group">
 						<label>Mobile No</label> <input type="text" class="form-control"
@@ -119,11 +133,11 @@
 						ng-model="pd.cmmAddress" placeholder="Communication Address"></textarea>
 				</div>
 				<div class="form-group">
-					<label>Shipping Address &nbsp;&nbsp;<input type="checkbox"
+					<label>Shipping Address &nbsp;&nbsp;</label> <label
+						for="sameAsComm" class="light"><input type="checkbox"
 						id="sameAsComm" ng-model="pd.addressSame" ng-true-value="Y"
-						ng-false-value="N" ng-click="sameAddress()" /><label
-						for="sameAsComm" class="light">&nbsp;Same As Communication
-							Address</label></label>
+						ng-false-value="N" ng-click="sameAddress()" />&nbsp;Same As
+						Communication Address</label>
 					<textarea type="text" class="form-control" required
 						ng-disabled="pd.addressSame == 'Y'" ng-model="pd.shippingAddress"
 						placeholder="Shipping Address"></textarea>
@@ -142,8 +156,9 @@
 					</select>
 				</div> -->
 				<div class="form-group">
-					<label class="">City</label> <input type="text" class="form-control"
-						ng-model="pd.customCity" placeholder="City Name" maxlength="100">
+					<label class="">City</label> <input type="text"
+						class="form-control" ng-model="pd.customCity"
+						placeholder="City Name" maxlength="100">
 				</div>
 			</fieldset>
 			<fieldset class="mt-50">
@@ -172,8 +187,7 @@
 					</ul>
 				</div>
 				<div class="form-group mt-25">
-					<a href="order#/placeorder/model"
-						class=" btn btn-default btn-lg">Back</a>
+					<a href="order#/placeorder/model" class=" btn btn-default btn-lg">Back</a>
 					<button ng-click="showModal()" ng-disabled="detailsForm.$invalid"
 						class=" btn btn-lg ml-20 btn-success">Proceed</button>
 				</div>

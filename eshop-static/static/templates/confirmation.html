@@ -28,6 +28,7 @@
 				<th class="txt-md">Product</th>
 				<th class="txt-md">Color</th>
 				<th class="txt-md">Storage</th>
+				<th class="txt-md">Quantity</th>
 				<th class="txt-md">Price</th>
 			</thead>
 			<tbody>
@@ -38,8 +39,9 @@
 					<td class="txt-sm"><span class="light">{{device.color |
 							color}}</span></td>
 					<td class="txt-sm"><span class="light">{{device.storageDesc}}</span></td>
-					<td class="txt-sm"><span class="bold">N {{device.cost /
-							1000}}</span></td>
+					<td class="txt-sm"><span class="light">{{device.quantity}}</span></td>
+					<td class="txt-sm"><span class="bold">N
+							{{device.cost*device.quantity / 1000}}</span></td>
 				</tr>
 			</tbody>
 		</table>
@@ -59,10 +61,21 @@
 					class="col-xs-6 txt-sm brand-txt">Storage </span> <span
 					class="col-xs-6 txt-sm">{{device.storageDesc}} </span></li>
 				<li class="list-group-item"><span
+					class="col-xs-6 txt-sm brand-txt">Storage </span> <span
+					class="col-xs-6 txt-sm">{{device.quantity}} </span></li>
+				<li class="list-group-item"><span
 					class="col-xs-6 txt-sm brand-txt">Price </span> <span
-					class="col-xs-6 txt-sm">N {{device.cost / 1000}}</span></li>
+					class="col-xs-6 txt-sm">N {{device.cost*device.quantity /
+						1000}}</span></li>
 			</ul>
+
+			<hr>
+			<div class="pull-right">
+				<span class="light txt-lg brand-txt mr-20">Total:</span>
+				<span class="bold txt-lg mr-20">N {{order.payment.total/1000}}</span>
+			</div>
 		</fieldset>
+
 
 
 		<fieldset class="mb-25">
